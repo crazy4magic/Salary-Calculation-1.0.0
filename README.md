@@ -1,117 +1,115 @@
-# 🎧 DJ Payroll System Guide
+# DJ Payroll Calculator
 
-This tool calculates how much to pay each DJ per month based on the shift schedule you paste in.
+A desktop application for calculating DJ payroll based on their shifts. The application processes schedule text and generates detailed payroll reports.
 
----
+## Features
 
-## 📂 Project Files
+- Process schedule text with DJ shifts
+- Calculate gross pay, tax deductions, and net pay
+- Generate CSV reports with Korean date format
+- Support for multiple DJs per shift
+- Automatic browser launch for web interface
+- Dark mode support
+- Offline functionality
 
-- `main.py` → Python script that reads the schedule and calculates payroll
-- `alias_map.json` → Maps DJ nicknames to official names (e.g., "illi" → "DJ Illi")
-- `april_schedule.txt` → Raw text version of DJ schedule input
-- `output/` → Folder where `.csv` files are saved
-- `monthly_payouts_25년_5월_정산.csv` → Auto-generated payment report
+## Installation
 
----
+### Option 1: Using the Command File (Recommended)
 
-## 💡 How It Works
+1. Copy `dj_payroll_calculator.command` to your Applications folder:
+   ```bash
+   cp dj_payroll_calculator.command /Applications/
+   ```
 
-1. You paste your monthly DJ schedule into `april_schedule.txt`
-2. The script finds DJ names, counts shifts, calculates gross and net pay
-3. Each shift is ₩150,000  
-   Tax: 3.3% withheld  
-   Net = Gross × 0.967
-4. At the bottom, it adds a row with totals: gross, tax, and net
+2. Make it executable:
+   ```bash
+   chmod +x /Applications/dj_payroll_calculator.command
+   ```
 
----
+3. Double-click the file in Applications to run
 
-## ▶️ How to Run It (No Terminal)
+### Option 2: Building from Source
 
-1. Open `main.py` in Cursor
-2. Click the ▶️ **Run** button in the top right
-3. The script will output a `.csv` file into the `output/` folder
-4. Open the `.csv` in Google Sheets
+1. Ensure you have Python 3.11.8 installed via pyenv:
+   ```bash
+   pyenv install 3.11.8
+   pyenv global 3.11.8
+   ```
 
----
+2. Install required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## 🧪 If You Use Terminal (Optional)
+3. Build the application:
+   ```bash
+   python setup.py py2app
+   ```
 
-```bash
-cd "/Users/caleb/Desktop/Cursor Projects/salary calculation"
-python main.py
-pyenv global 3.11.8
-## 🔀 Alias Map Format (`alias_map.json`)
+## Usage
 
-```json
-{
-  "illi": "DJ Illi",
-  "Ellia": "DJ Ellia",
-  "bigma": "DJ Bigma",
-  "민호": "DJ Drako"
-}
-```
+1. Launch the application by double-clicking `dj_payroll_calculator.command` in Applications
+2. The application will:
+   - Open Terminal (required for the Flask server)
+   - Launch your default web browser to the calculator interface
+3. Paste your schedule text into the input field
+4. Click "Calculate" to process the schedule
+5. View the results in the browser
+6. Download the CSV report from the Documents/DJ Payroll folder
 
-You can add more nicknames here if needed.
+## Schedule Format
 
-## 🔀 Alias Map Format (`alias_map.json`)
+The application supports various time formats:
+- `10:00 - 11:30 DJ Name`
+- `10시-11:30 DJ Name`
+- `10:00~마감 DJ Name`
 
-```json
-{
-  "illi": "DJ Illi",
-  "Ellia": "DJ Ellia",
-  "bigma": "DJ Bigma",
-  "민호": "DJ Drako"
-}
-```
+Multiple DJs can be specified using:
+- `DJ1 & DJ2`
+- `DJ1, DJ2`
+- `DJ1 x DJ2`
 
-You can add more nicknames here if needed.
+## Output
 
-## **🛠️ To-Do**
+The application generates a CSV file in your Documents/DJ Payroll folder with:
+- DJ Name
+- Number of Shifts
+- Gross Pay (150,000 won per shift)
+- Tax Amount (3.3%)
+- Net Pay
 
-- Setup folder
-    
-- Create main.py
-    
-- Create alias_map.json
-    
-- Paste schedule into april_schedule.txt
-    
-- Add new DJs to alias map
-    
-- Automate monthly run
+## Requirements
 
-## 🚀 How to Use
+- macOS 10.10 or later
+- Python 3.11.8
+- Required Python packages (automatically installed):
+  - Flask
+  - pandas
+  - numpy
+  - jinja2
+  - werkzeug
+  - click
+  - itsdangerous
+  - markupsafe
+  - dateutil
+  - pytz
+  - six
 
-1. Open `alias_map.json`  
-   - Add any nicknames or alternate spellings for your DJs  
-   - Example:
-     ```json
-     {
-       "illi": "DJ Illi",
-       "민호": "DJ Drako"
-     }
-     ```
+## Troubleshooting
 
-2. Open `april_schedule.txt`  
-   - Paste your raw DJ schedule for the month  
-   - Example:
-     ```
-     4/4 금요일
-     10시-11:30 illi
-     11:30-12:45 Ellia
-     ```
+1. If the application doesn't start:
+   - Check if Terminal has permission to run the script
+   - Ensure Python 3.11.8 is installed
+   - Verify all required packages are installed
 
-3. Run `main.py`  
-   - In Cursor: open the file and click ▶️ **Run**  
-   - OR in Terminal:
-     ```bash
-     cd "/Users/caleb/Desktop/Cursor Projects/salary calculation"
-     python main.py
-     ```
+2. If the web interface doesn't open:
+   - Check if port 5000 is available
+   - Try accessing http://127.0.0.1:5000 manually
 
-4. Check the `output/` folder  
-   - You'll find a CSV file like:  
-     `monthly_payouts_25년_5월_정산.csv`  
-   - Open it with Google Sheets to see full payment details
+3. If the CSV isn't generated:
+   - Check if you have write permissions in Documents/DJ Payroll
+   - Verify the schedule format is correct
 
-5. Confirm the last row — it shows total shifts, gross, tax, and net payments
+## License
+
+© 2024 DJ Payroll Calculator
